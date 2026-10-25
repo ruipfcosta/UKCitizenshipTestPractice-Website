@@ -1,113 +1,42 @@
-# Automatic App Landing Page
-**Create and deploy an iOS app landing page on GitHub Pages in only five minutes.**
+# Life in the UK: Test Practice — website
 
-Designed for GitHub Pages for super easy set up. 
+Landing page for the [Life In The UK: Test Practice](https://apps.apple.com/gb/app/life-in-the-uk-test-practice/id6499503742) iOS app.
 
-🔧 Fork this repo
+Plain HTML and CSS. No build step and no JavaScript. Hosted on GitHub Pages (`.nojekyll` turns Jekyll off).
 
-🗝 Enter iOS App ID in `_config.yml`
+```
+index.html               Homepage
+privacypolicy/index.html Privacy policy (the App Store links to /privacypolicy)
+404.html                 Not found page
+styles.css               All styles
+robots.txt, sitemap.xml  SEO
+assets/img/              App icon sizes, App Store badge
+assets/screenshots/      App screenshots (placeholders for now)
+```
 
-📲 Upload video preview or screenshot
+## Preview locally
 
-🎨 Customise site in `_config.yml` (no HTML/CSS)
+```sh
+python3 -m http.server 8000
+# open http://localhost:8000
+```
 
-📝 Write Privacy Policy as markdown in `privacypolicy.md`
+## Replacing the screenshots
 
-🕒 Keep a changelog in `CHANGELOG.md`
+The files in `assets/screenshots/` are blank placeholders at 1206 × 2622. To swap them, save simulator screenshots over these files and keep the same names:
 
-✅ Site becomes live at GitHub Pages repository URL, e.g. `https://your-username.github.io/your-repo-name/`.
+| File               | Shown in                     |
+| ------------------ | ---------------------------- |
+| `home.png`         | Hero                         |
+| `mock-test.png`    | "Practise under real exam conditions" |
+| `explanations.png` | "Understand it, don't just memorise it" |
+| `mistakes.png`     | "Turn mistakes into marks"   |
+| `progress.png`     | "Know when you're ready"     |
 
-<img src="https://emilbaehr.com/files/jayson1.png" width="440"> <img src="https://emilbaehr.com/files/slor1.png" width="440">
+Use the raw screenshot without a device frame, because the page draws the phone frame in CSS. If the new device has a different resolution, update `aspect-ratio` in `.phone` and the `width`/`height` attributes on the `<img>` tags.
 
+To keep the page fast, compress the screenshots before you commit them (for example, `cwebp -q 82` to WebP, then change the extensions in `index.html`).
 
+## When details change
 
-
-## Quick Start
-
-### Step 1: Fork this repo.
-After forking the repo, your site will be live immediately on your personal Github Pages account, e.g. `https://yourusername.github.io/your-repo-name/`.
-
-*Make sure GitHub Pages is enabled for your repo. It might take some time for the site to propagate entirely.*
-
-
-
-### Step 2: Enter iOS App ID in `_config.yml`
-Enter your iOS app ID in the `ios_app_id` field and commit your changes. Your site will automatically rebuild with your app icon, name, price and link to App Store.
-
-You can go on with customising almost anything in the `_config.yml` file. 
-
-Things you can customise in `_config.yml`:
-- App Name
-- App Icon
-- App Description
-- App Price
-- App Store Link
-- Play Store Link
-- Press Kit Download Link
-- Cover Image
-- Cover Overlay Color
-- Background Color
-- Text Colors
-- iPhone Device Color
-- Your Name / Company Name
-- Link to Website
-- Social Links and Contact Info
-- Feature List (Title, text, icon)
-
-
-
-### Step 3: Add screenshot or video
-
-#### Adding a screenshot
-Upload a `.png` or `.jpg` of your app to the folder `assets/screenshot/`. The name does not matter. Be sure to delete the placeholder `yourscreenshot.png`.
-
-#### Adding video
-Upload your video to the folder `assets/videos/`. To have support for most browsers, you need to upload two files – one for Safari and one for Chrome/Firefox.
-
-Video formats supported by Chrome and Firefox:
-- `.webm`
-- `.ogg`
-
-Video formats supported by Safari:
-- `.mp4`
-- `.mov`
-
-#### Resolutions
-The videos and screenshots must have one of the following resolutions:
-- 828x1792
-- 1125x2436
-- 1242x2688
-
-
-
-### Step 4: Edit (or remove) Privacy Policy and Changelog
-Your site automatically includes pages for a Privacy Policy and a Changelog. Change the content of these pages by editing the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
-
-In each of the markdown files, you can set the `include_in_header:` value to either `true` or `false`. This determines if the page is included in the top navigation.
-By default, only the Changelog is included in the top navigation. The title of the navigation item can also be edited, by editing the `title:` in each markdown file.
-
-If you need to, you can create additional markdown based pages just by creating an `.md` file like the `privacypolicy.md` and `CHANGELOG.md` files in the `_pages` directory.
-
-**Please note:** The Privacy Policy and Changelog provided are written using dummy text, so please adapt each of them for your own app.
-You can also choose not to include these pages, by simple deleting the `privacypolicy.md` and `CHANGELOG.md` files.
-
-
-
-
-## Feedback
-If you have feedback regarding bugs or improvements, open an issue, @ me on Twitter or write me an email. You can find my contact info on my website.
-
-I'd love to see the sites you create using this little tool.
-
-## Credits
-- [Jekyll](https://github.com/jekyll/jekyll)
-- [FontAwesome](https://fontawesome.github.io/Font-Awesome/)
-
-## Donations
-[Donations are welcome](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=S8ZZT3JXJPN92&currency_code=USD&source=url)
-
-## Author
-[Emil Baehr](https://emilbaehr.com/)
-
-## License
-[MIT License](LICENSE)
+The rating (4.7 / 53 ratings) and other App Store facts appear both in the page and in the JSON-LD block in `<head>` of `index.html`. Update both together. If the site moves to a custom domain, replace `https://ruipfcosta.github.io/UKCitizenshipTestPractice-Website/` everywhere: the canonical and `og:` tags, the JSON-LD, `robots.txt` and `sitemap.xml`. Also update the absolute paths in `404.html`.
